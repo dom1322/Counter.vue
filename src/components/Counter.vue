@@ -1,11 +1,11 @@
 <template>
   
-    <h2>Counter</h2>
+    <h2>{{ CustomeTitle }}</h2>
     <p> {{  counter }}<sup>2</sup> = {{ SquareCounter }}</p>
 
     <div>
-        <button>+1</button>
-        <button>-1</button>
+        <button v-on:click="increase">+1</button>
+        <button v-on:click="decrease">-1</button>
     </div>
 
  
@@ -14,27 +14,45 @@
 
 <script>
 export default {
+    props: {
+        title: String,
+        start: {
+            type: Number,
+            default: 100,
+            validator(value) {
+                return value < 100
+
+            }
+        }
+    },
 
     data() {
         return {
 
-            counter: 5
+            counter: this.start
         }
     },
     methods:{
         getSquareValue() {
             return this.counter * this.counter
+        },
+
+        increase() {
+            this.counter += 1
+        },
+        decrease() {
+            this.counter -= 1
         }
 
-        // increase() {
-        //     return this.counter + 1
-        // }
     },
     computed: {
         SquareCounter() {
             return this.counter * this.counter
         }
-    }      
+    },
+        CustomeTitle() {
+            return this.title || "Counter"
+        }    
 }
 </script>
 
